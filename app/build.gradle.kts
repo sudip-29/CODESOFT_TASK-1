@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    // --- THIS PLUGIN IS REQUIRED AND HAS BEEN ADDED BACK ---
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
 }
@@ -56,7 +55,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation("androidx.compose.runtime:runtime-livedata")
 
-    // This library contains the extended set of Material Icons, including DarkMode and LightMode.
+    // DarkMode and LightMode.
     implementation("androidx.compose.material:material-icons-extended")
 
     // Room

@@ -12,8 +12,7 @@ import com.devsudip.ToDoListFrontend.ui.viewmodel.TodoViewModelFactory
 
 class MainActivity : ComponentActivity() {
 
-    // Use the viewModels delegate to get a reference to the ViewModel.
-    // The factory is created using the repository from our Application class.
+
     private val todoViewModel: TodoViewModel by viewModels {
         TodoViewModelFactory((application as TodoApplication).repository)
     }
@@ -23,7 +22,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ToDoListFrontendTheme {
-                // Pass the ViewModel instance to the main screen.
                 TodoListScreen(viewModel = todoViewModel)
             }
         }

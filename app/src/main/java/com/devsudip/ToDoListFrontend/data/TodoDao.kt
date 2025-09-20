@@ -18,7 +18,6 @@ interface TodoDao {
     @Update
     suspend fun updateTodo(item: TodoItem)
 
-    // --- NEW FUNCTION ADDED ---
     @Query("DELETE FROM todo_items WHERE isCompleted = 1 AND dueDate < :yesterdayTimestamp")
     suspend fun deleteCompletedTasksBefore(yesterdayTimestamp: Long)
 }

@@ -24,16 +24,13 @@ class TodoRepository(private val todoDao: TodoDao, private val userDao: UserDao)
         userDao.insertUser(user)
     }
 
-    // --- NEW FUNCTION ADDED ---
     suspend fun deleteCompletedTasksFromYesterday() {
         val calendar = Calendar.getInstance()
-        // Set calendar to the beginning of today
+
         calendar.set(Calendar.HOUR_OF_DAY, 0)
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
-        // This timestamp represents the very first millisecond of today.
-        // Any completed task with a due date before this timestamp is from yesterday or earlier.
         val yesterdayTimestamp = calendar.timeInMillis
         todoDao.deleteCompletedTasksBefore(yesterdayTimestamp)
     }

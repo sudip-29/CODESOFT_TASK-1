@@ -17,7 +17,6 @@ class TodoViewModel(private val repository: TodoRepository) : ViewModel() {
     val user: LiveData<User?> = repository.user.asLiveData()
 
     init {
-        // Run cleanup logic when the ViewModel is first created
         cleanupOldTasks()
     }
 
@@ -27,9 +26,7 @@ class TodoViewModel(private val repository: TodoRepository) : ViewModel() {
 
     fun updateTodo(item: TodoItem) = viewModelScope.launch {
         val isOverdue = isTaskOverdue(item.dueDate)
-        // --- NEW LOGIC ---
-        // If the task was overdue and is now being marked as complete, delete it.
-        // Otherwise, just update it as normal.
+
         if (isOverdue && item.isCompleted) {
             repository.deleteTodo(item)
         } else {

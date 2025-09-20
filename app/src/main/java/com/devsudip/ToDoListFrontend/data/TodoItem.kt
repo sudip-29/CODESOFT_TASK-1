@@ -13,8 +13,6 @@ data class TodoItem(
     val dueDate: Long = System.currentTimeMillis() + 86400000 * 5,
     val progress: Int = 0,
     val isHighPriority: Boolean = false,
-    // NEW: We add a creation date to know when a task was made.
-    // This is crucial for grouping and cleanup.
     val creationDate: Long = System.currentTimeMillis()
 )
 
