@@ -24,15 +24,9 @@ class TodoRepository(private val todoDao: TodoDao, private val userDao: UserDao)
         userDao.insertUser(user)
     }
 
-    suspend fun deleteCompletedTasksFromYesterday() {
-        val calendar = Calendar.getInstance()
-
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-        val yesterdayTimestamp = calendar.timeInMillis
-        todoDao.deleteCompletedTasksBefore(yesterdayTimestamp)
+    // This function now accepts the timestamp and passes it to the DAO
+    suspend fun deleteCompletedTasksFromYesterday(yesterdayTimestamp: Long) {
+        todoDao.deleteCompletedTasksFromYesterday(yesterdayTimestamp)
     }
 }
 

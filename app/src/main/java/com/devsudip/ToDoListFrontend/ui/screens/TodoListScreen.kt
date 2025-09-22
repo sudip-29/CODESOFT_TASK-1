@@ -32,26 +32,30 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+// --- LOGO-INSPIRED COLOR PALETTE ---
+
 // Light Mode
-val LightBackground = Color(0xFFF8F9FA)
-val LogoCyan = Color(0xFF00E0FF)
-val LightPrimaryText = Color(0xFF212529)
-val LightSecondaryText = Color(0xFF6C757D)
-val CompletedGreen = Color(0xFF28A745)
-val OverdueRed = Color(0xFFDC3545)
+val LightBackground = Color(0xFFF8F9FA) // A clean, very light gray
+val LogoCyan = Color(0xFF00E0FF)        // Main accent color from the logo
+val LightPrimaryText = Color(0xFF212529) // A strong, dark gray for text
+val LightSecondaryText = Color(0xFF6C757D) // A softer gray for secondary text
+val CompletedGreen = Color(0xFF28A745)     // A satisfying green for completed tasks
+val OverdueRed = Color(0xFFDC3545)         // A clear red for overdue items
 
 // Dark Mode
-val DarkBackground = Color(0xFF0D1117)
-val DarkSurface = Color(0xFF161B22)
-val DarkPrimaryText = Color(0xFFC9D1D9)
-val DarkSecondaryText = Color(0xFF8B949E)
+val DarkBackground = Color(0xFF0D1117)  // Deep dark blue from the logo background
+val DarkSurface = Color(0xFF161B22)     // A slightly lighter surface color
+val DarkPrimaryText = Color(0xFFC9D1D9) // Light gray for primary text
+val DarkSecondaryText = Color(0xFF8B949E) // Dimmer gray for secondary text
 
 
+// A sentinel object to represent the initial loading state
 private object UserStateInitial
 
 @Composable
 fun TodoListScreen(viewModel: TodoViewModel) {
-    var isDarkMode by remember { mutableStateOf(false) }
+    // Get the theme state from the ViewModel. Default to false (light mode) on first load.
+    val isDarkMode by viewModel.isDarkMode.observeAsState(initial = false)
     val view = LocalView.current
 
     if (!view.isInEditMode) {
@@ -89,7 +93,8 @@ fun TodoListScreen(viewModel: TodoViewModel) {
                 upcomingTasks = upcomingTasks,
                 overdueTaskCount = overdueTasks.size,
                 isDarkMode = isDarkMode,
-                onToggleTheme = { isDarkMode = !isDarkMode },
+                // The toggle button now calls the ViewModel to save the preference
+                onToggleTheme = { viewModel.setTheme(!isDarkMode) },
                 onAddTaskClicked = { showAddDialog = true },
                 onOverdueClicked = { showOverdueDialog = true },
                 onTaskCheckedChange = { task, isCompleted ->
@@ -469,7 +474,6 @@ fun AddTodoDialog(
         }
     )
 }
-
 
 @Composable
 fun GetUserNameDialog(isDarkMode: Boolean, onConfirm: (String) -> Unit) {
